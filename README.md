@@ -26,7 +26,7 @@ Record your answers in `ANSWERS.md` as you work, and number your responses so th
    ssh username@shell.cec.wustl.edu
    ```
 
-   If repeated password attempts are a concern, you may want to configure an SSH key first; see `ssh_key_generation.html`.
+   If repeated password attempts are a concern, you may want to configure an SSH key first; see [Generating SSH Keys](ssh_key_generation.md).
 
    Because compiles may be computationally intensive, do not run them on `shell.cec.wustl.edu`. Instead, run:
 

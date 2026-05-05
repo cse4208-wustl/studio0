@@ -14,9 +14,7 @@ You may complete this studio individually or in a small group.
 
 Record your answers in `ANSWERS.md` as you work, and number your responses so they are easy to match to each exercise.
 
-1. List the names of the people who worked together on this studio.
-
-2. Connect to `shell.cec.wustl.edu` using your WUSTL Key credentials.
+1. Connect to `shell.cec.wustl.edu` using your WUSTL Key credentials.
 
    On macOS or Linux, you can run `ssh` directly from a terminal. On modern Windows systems, you can use `ssh` directly from Windows Terminal or PowerShell.
 
@@ -42,7 +40,7 @@ Record your answers in `ANSWERS.md` as you work, and number your responses so th
    hostname
    ```
 
-3. Configure your environment to use `gcc 8.3.0` by running:
+2. Configure your environment to use `gcc 8.3.0` by running:
 
    ```bash
    module add gcc-8.3.0
@@ -59,7 +57,7 @@ Record your answers in `ANSWERS.md` as you work, and number your responses so th
 
    Record the output of both commands.
 
-4. Clone your `studio0` repo and work inside that cloned directory.
+3. Clone your `studio0` repo and work inside that cloned directory.
 
    The cloned repo already includes `studio0.cpp` and `Makefile`.
 
@@ -77,7 +75,7 @@ Record your answers in `ANSWERS.md` as you work, and number your responses so th
 
    Record the compiler output and program output.
 
-5. Modify `main` so its parameters are named `argc` and `argv`. Declare additional non-zero `const int` values that can be returned to report distinct failure modes.
+4. Modify `main` so its parameters are named `argc` and `argv`. Declare additional non-zero `const int` values that can be returned to report distinct failure modes.
 
    Update the program so that if no command-line arguments are provided, it prints a helpful usage message like:
 
@@ -95,7 +93,7 @@ Record your answers in `ANSWERS.md` as you work, and number your responses so th
 
    Then run it again with one command-line argument and record both the program output and the returned value for each case.
 
-6. Modify the program so that instead of writing to standard output, it treats each command-line argument as an output filename. For each filename, use an `ofstream` to open the file, write the same output as before, and close it.
+5. Modify the program so that instead of writing to standard output, it treats each command-line argument as an output filename. For each filename, use an `ofstream` to open the file, write the same output as before, and close it.
 
    Add any additional non-zero error codes needed if a file cannot be opened.
 
@@ -112,6 +110,8 @@ Record your answers in `ANSWERS.md` as you work, and number your responses so th
    ```
 
    Run the program again with that filename and confirm that it returns an appropriate error value. Record the returned values and resulting file contents after each run.
+
+6. List the names of the people who worked together on this studio.
 
 ## Deliverables
 

@@ -1,0 +1,175 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+
+	<style>
+		.tt {
+			font-family: "Monospace";
+		}
+		.marion {
+			color:green;
+		}
+		.removed {
+			text-decoration: line-through;
+			color:red;
+			//display:none;
+		}
+	</style>
+
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"><title>CSE 428S - Multi-Paradigm Programming in C++</title></head>
+
+<h2 style="text-align: center;">CSE 428S: Generating SSH Keys</h2>
+
+<hr style="width: 100%; height: 2px;">
+When you connect to the school's servers with ssh, you must specify your username, e.g.
+<code>ssh username@shell.cec.wustl.edu</code>
+or you risk getting locked out of the server.
+If you connect with the wrong username or password 5 times in 30 minutes,
+your IP address may be blocked.		
+</p>
+
+<p>
+To help prevent lockouts due to incorrect password attempts,
+you may want to log in using an SSH key instead of a password,
+as outlined below:
+</p>
+
+<h3>Instructions for SSH Key Generation</h3>
+
+<ol>
+
+	<li>
+		<p>First, you will generate a key.</p>
+		<p>Open a terminal window or command prompt on your personal computer or Raspberry Pi.</p>
+		<p>Then, enter the hidden .ssh directory:
+			<br /><code>cd .ssh</code></p>
+		<p>Now, generate a key using:
+			<br /><code>ssh-keygen -f your-key-name</code></p>
+		<p>Replace <code>your-key-name</code> with a unique name for your key.
+			We recommend something containing your username, like <code>key_username</code>.</p>
+		<p>Now, enter a passphrase for your key. You can use your WUSTL Key password,
+		or another password of your choice. Keep in mind that this passphrase is bound to this SSH key;
+		  it will not change automatically when your WUSTL Key password changes.</p>
+                
+		<p>Your key now exists locally on your machine in two files:
+			your <em>public key</em> exists in the file <code>your-key-name.pub</code>.
+			This half of your SSH key is public information, and you can freely give it to anyone you need to communicate securely with.</p>
+		<p>Your <em>private key</em> exists in the file <code>your-key-name</code>.
+			This is like your password. <strong>You should never give this file to anyone!</strong>
+			Anyone with your private key can impersonate you and successfully interact with anyone who has your public key.</p>
+	</li>
+
+	<li>
+		<p>
+			Now, install the key on the school's server by issuing the following command:<br />
+			<code>ssh-copy-id -i your-key-name your-username@shell.cec.wustl.edu</code>
+		</p>
+		<p>
+			This will instruct the server to associate the key you just created with your user account.
+			You will be prompted to enter your password. This is your WUSTL Key password, not your SSH key passphrase!
+		</p>
+		<h4>Note for Windows Users</h4>
+		<p>
+			If you are using Windows, the <code>ssh-copy-id</code> command may not be recognized.
+		</p>
+		<p>
+			In this case, use sftp to copy your key files (public and private)
+			from your local .ssh directory to your .ssh directory on <code>shell.cec.wustl.edu</code>:<br />
+			<code>cd .ssh</code><br />
+			<code>put your-key-name*</code>
+		</p>
+		<p>
+			Then, ssh into the server with your WUSTL Key and password,
+			and enter the hidden .ssh directory:<br />
+			<code>cd .ssh</code>
+		</p>
+		<p>Now, install the key using the <code>ssh-copy-id</code> command as outlined above.</p>
+		<p>At this point, if you like, you may delete the private key file from the server.</p>
+
+	</li>
+
+	<li>
+		<p>Finally, your computer's ssh client will need to be configured to use your key.</p>
+		<p>If it does not alreday exist, create a file called <code>config</code> in your local .ssh directory.
+		Inside the file, add the following 3 lines:</p>
+
+		<pre>
+Host a-nickname-for-the-server
+	HostName shell.cec.wustl.edu
+	IdentityFile ~/.ssh/your-key-name
+		</pre>
+
+		<p>In the above, <code>a-nickname-for-the-server</code> is a short nickname you would like to use to access the server. We chose "shell".</code></p>
+		<p>The text after <code>IdentityFile</code> should be the path to your private key.</p>
+		<p>You can now connect to <code>shell.cec.wustl.edu</code> with your key,
+			without providing your WUSTL Key username or password. Simply use either:</p>
+			<code>ssh a-nickname-for-the-server</code> (in our case <code>ssh shell</code>)<br />
+			or<br/>
+			<code>sftp a-nickname-for-the-server</code> (in our case <code>sftp shell</code>)
+		</p>
+			
+		<p>You will be prompted for the passphrase you assigned to the key. Enter the passphrase, press enter, and you're in!</p>
+
+	</li>
+
+</ol>
+
+<!--
+
+<hr style="width: 100%; height: 2px;">
+
+<p>
+If you're using Putty to establish SSH connections, rather than the command line, you'll have to perform a few extra steps.
+</p>
+
+<h3>Instructions for Using Your SSH Key with Putty</h3>
+
+<ol>
+	<li>
+		<p>First, you will need to convert your key to a format Putty recognizes.</p>
+		<p>Open the utility PuTTYgen, which is installed with Putty, but is a separate executable.</p>
+		<p>Under "Actions," click "Load" to load an existing private key file.</p>
+		<p><em>If the file browser is filtering for "PuTTY Private Key Files (*.ppk),
+			make sure to change this to "All Files (*.*)"
+		</em>Select the SSH file you retrieved from <code>shell.cec.wustl.edu</code></p>
+		<p>Enter the passphrase you assigned to the key.</p>
+		<p>Click "Save private key" and save the converted key
+			(be sure to add the ".ppk" extension to the filename).</p>
+	</li>
+	<li>
+		<p>Now, when you connect with Putty,
+		expand the Connection menu, expand SSH,
+		then click the Auth menu item.</p>
+		<p>
+			Click Browse,
+			then select the new ".ppk" key you generated.
+		</p>
+
+	</li>
+	<li>
+		<p>You can now save your connection settings to avoid going through these steps again.</p>
+		<p>Under the Connection menu, click Data.</p>
+		<p>Here, you can specify your username in the "Auto-login username" textbox.</p>
+		<p>Next, click the Session menu item,
+			then specify your host name (i.e. <code>shell.cec.wustl.edu</code>).
+		</p>
+		<p>
+			Finally, under Saved Sessions, enter a name for these settings,
+			then click Save.
+		</p>
+		<p>Next time you open Putty,
+			you can select the saved session, click "Load," then click "Open."
+		</p>
+	</li>
+	<li>
+		Now, when you connect, Putty will prompt for your SSH key passphrase.
+		Enter the passphrase you assigned to your key, then press enter. You're in!
+	</li>
+
+</ol>
+
+-->
+
+<hr style="width: 100%; height: 2px;">
+
+</html>
+

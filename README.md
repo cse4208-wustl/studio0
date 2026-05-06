@@ -79,7 +79,7 @@ Record your answers in `ANSWERS.md` as you work, and number your responses so th
 
 5. To modify source code in your cloned repo on the Linux server, you can use [remote-ssh from Visual Studio Code](https://code.visualstudio.com/docs/remote/ssh). If you prefer a different Integrated Development Environment (IDE), Google how to use remote-ssh from your preferred IDE. If you are comfortable using a terminal editor on Linix (vim, emacs, etc), you are welcome to use it to modify your code as well. 
 
-Modify `main` so its parameters are named `argc` and `argv`. Declare additional non-zero `const int` values that can be returned to report distinct failure modes.
+   Modify `main` so its parameters are named `argc` and `argv`. Declare additional non-zero `const int` values that can be returned to report distinct failure modes.
 
    Update the program so that if no command-line arguments are provided, it prints a helpful usage message like:
 

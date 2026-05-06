@@ -59,7 +59,7 @@ Record your answers in `ANSWERS.md` as you work, and number your responses so th
 
    Record the output of both commands.
 
-4. Clone your `studio0` repo and work inside that cloned directory. If you want to clone over SSH from the Linux server, follow [Setting Up SSH Keys for Git](docs/ssh-keys-guide.md) first.
+4. Follow [Setting Up SSH Keys for Git](docs/ssh-keys-guide.md) to set up GitHub SSH keys on the Linux server. Then, clone your `studio0` repo from the linux server and work inside that cloned directory.  
 
    The cloned repo already includes `studio0.cpp` and `Makefile`.
 
@@ -77,7 +77,9 @@ Record your answers in `ANSWERS.md` as you work, and number your responses so th
 
    Record the compiler output and program output.
 
-5. Modify `main` so its parameters are named `argc` and `argv`. Declare additional non-zero `const int` values that can be returned to report distinct failure modes.
+5. To modify source code in your cloned repo on the Linux server, you can use [remote-ssh from Visual Studio Code](https://code.visualstudio.com/docs/remote/ssh). If you prefer a different Integrated Development Environment (IDE), Google how to use remote-ssh from your preferred IDE. If you are comfortable using a terminal editor on Linix (vim, emacs, etc), you are welcome to use it to modify your code as well. 
+
+Modify `main` so its parameters are named `argc` and `argv`. Declare additional non-zero `const int` values that can be returned to report distinct failure modes.
 
    Update the program so that if no command-line arguments are provided, it prints a helpful usage message like:
 

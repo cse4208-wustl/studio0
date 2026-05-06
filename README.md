@@ -26,7 +26,7 @@ Record your answers in `ANSWERS.md` as you work, and number your responses so th
    ssh username@shell.cec.wustl.edu
    ```
 
-   If repeated password attempts are a concern, or if you want to clone your studio repo over SSH from the Linux server, set up your SSH key first; see [Generating SSH Keys](docs/ssh_key_generation.md).
+   If repeated password attempts are a concern set up your SSH key first; see [Generating SSH Keys](docs/ssh_key_generation.md).
 
    Because compiles may be computationally intensive, do not run them on `shell.cec.wustl.edu`. Instead, run:
 

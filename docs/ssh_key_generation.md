@@ -1,86 +1,89 @@
 # Generating SSH Keys
 
-When you connect to the school's servers with `ssh`, specify your username explicitly, for example:
+When you connect to the school's servers with `ssh`, you must specify your username explicitly:
 
-```bash
+```
 ssh username@shell.cec.wustl.edu
 ```
 
-If you connect with the wrong username or password repeatedly, your IP address may be blocked. Using an SSH key can help reduce password-entry mistakes.
+If you connect with the wrong username or password repeatedly, your IP address may be blocked. Setting up an SSH key lets you connect without entering your password each time.
 
 ## Generate a Key
 
 1. Open a terminal on your computer.
 
-2. Enter your local `.ssh` directory:
+2. Run the following command to generate a key pair, replacing `your-key-name` with a descriptive name such as `key_username`:
 
-   ```bash
-   cd .ssh
+   ```
+   ssh-keygen -t ed25519 -f ~/.ssh/your-key-name
    ```
 
-3. Generate a key:
+   This creates two files in your `~/.ssh/` directory:
+   - `your-key-name.pub` — your **public** key, which can be shared
+   - `your-key-name` — your **private** key, which should **never** be shared
 
-   ```bash
-   ssh-keygen -f your-key-name
-   ```
-
-   Replace `your-key-name` with a unique name such as `key_username`.
-
-4. Enter a passphrase for the key when prompted.
-
-Your key pair will be stored in two files:
-
-- `your-key-name.pub`: your public key, which can be shared when needed
-- `your-key-name`: your private key, which should never be shared
+3. When prompted for a passphrase, you may either:
+   - Press **Enter** twice to skip the passphrase (simplest — no password ever required), or
+   - Enter a passphrase for added security (you will be prompted for it each time you connect, unless you set up `ssh-agent`)
 
 ## Install the Key on the School Server
 
 Run:
 
-```bash
-ssh-copy-id -i your-key-name your-username@shell.cec.wustl.edu
+```
+ssh-copy-id -i ~/.ssh/your-key-name.pub your-username@shell.cec.wustl.edu
 ```
 
-This associates the key with your account on the server. When prompted, enter your WUSTL Key password, not your SSH key passphrase.
+When prompted, enter your **WUSTL Key password** (not your SSH key passphrase). This copies your public key to the server so it can recognize you.
 
 ### Windows Note
 
-On some Windows setups, `ssh-copy-id` may not be available. In that case:
+On some Windows setups, `ssh-copy-id` may not be available. In that case, run the following in either PowerShell or Command Prompt:
 
-1. Copy the key files from your local `.ssh` directory to your `.ssh` directory on `shell.cec.wustl.edu` with `sftp`.
-2. SSH into the server.
-3. Enter the server-side `.ssh` directory:
+```
+type $env:USERPROFILE\.ssh\your-key-name.pub | ssh your-username@shell.cec.wustl.edu "cat >> ~/.ssh/authorized_keys"
+```
 
-   ```bash
-   cd .ssh
-   ```
-
-4. Run the same `ssh-copy-id` command there if available, or otherwise finish the key setup using the server's SSH configuration tools.
-
-If you copied your private key to the server temporarily, you may delete it from the server afterward.
+> **Note:** Only your **public** key (`.pub` file) should ever be copied to the server. Never copy your private key to any remote machine.
 
 ## Configure Your SSH Client
 
-If it does not already exist, create a file named `config` in your local `.ssh` directory and add:
+Create or edit the file `~/.ssh/config` on your local machine and add the following, replacing the placeholder values:
 
-```text
-Host a-nickname-for-the-server
+```
+Host shell
     HostName shell.cec.wustl.edu
+    User your-username
     IdentityFile ~/.ssh/your-key-name
 ```
 
-Choose any nickname you like for `a-nickname-for-the-server`, such as `shell`.
+You can choose any nickname you like in place of `shell`.
 
-After this, you can connect with:
+If you created this file for the first time, set the correct permissions:
 
-```bash
-ssh a-nickname-for-the-server
+```
+chmod 700 ~/.ssh
+chmod 600 ~/.ssh/config
 ```
 
-or:
+After this, you can connect with simply:
 
-```bash
-sftp a-nickname-for-the-server
+```
+ssh shell
 ```
 
-You will be prompted for the SSH key passphrase you chose earlier.
+or transfer files with:
+
+```
+sftp shell
+```
+
+## Verify It Works
+
+After completing the steps above, run:
+
+```
+ssh shell
+```
+
+If everything is set up correctly, you will connect without being asked for your WUSTL password. If you set a passphrase in step 3, you will be prompted for that instead.

@@ -59,7 +59,7 @@ Record your answers in `ANSWERS.md` as you work, and number your responses so th
 
    Record the output of both commands.
 
-4. Follow [Setting Up SSH Keys for Git](docs/ssh-keys-guide.md) to set up GitHub SSH keys on the Linux server. Then, clone your `studio0` repo from the linux server and work inside that cloned directory.  
+4. Follow [Setting Up SSH Keys for Git](docs/ssh-keys-guide.md) to set up GitHub SSH keys on the Linux server. Then, clone your `studio0` repo using SSH URL from the linux server and work inside that cloned directory.  
 
    The cloned repo already includes `studio0.cpp` and `Makefile`.
 
